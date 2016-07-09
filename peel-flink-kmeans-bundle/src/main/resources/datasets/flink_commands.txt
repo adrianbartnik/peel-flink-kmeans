@@ -39,3 +39,20 @@ Performance Tests
 --points hdfs:///data_10k.csv --output hdfs:///result_10k_plusplus_bisect_10_3.csv --clustersize 10 --iterations 10 --diffiteration --plusplus --bisect --iterationsamples 3 --outputcentroids
 --points hdfs:///data_10k.csv --output hdfs:///result_10k_plusplus_minibatch_bisect_10_1000_5.csv --clustersize 10 --iterations 10 --diffiteration --plusplus --minibatch --samplesize 1000 --bisect --iterationsamples 5 --outputcentroids
 --points hdfs:///data_10k.csv --output hdfs:///result_10k_plusplus_minibatch_bisect_10_100_5.csv --clustersize 10 --iterations 10 --diffiteration --plusplus --minibatch --samplesize 100 --bisect --iterationsamples 5 --outputcentroids
+
+kmeans-test.plain-5
+kmeans-test.plain-10
+kmeans-test.plusplus-5
+kmeans-test.plusplus-10
+kmeans-test.minibatch-10
+kmeans-test.minibatch-20
+kmeans-test.bisecting-3
+kmeans-test.bisecting-5
+kmeans-test.bisecting-11
+kmeans-test.set1 => plusplus_minibatch_10_10
+kmeans-test.set2 => plusplus_minibatch_10_20
+kmeans-test.set3 => plusplus_bisect_10_3
+kmeans-test.set4 => plusplus_bisect_10_5
+kmeans-test.set5 => plusplus_bisect_10_11
+kmeans-test.set6 => plusplus_minibatch_bisect_10_10_5
+kmeans-test.set6 => plusplus_minibatch_bisect_10_20_5

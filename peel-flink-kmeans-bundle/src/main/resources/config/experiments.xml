@@ -17,7 +17,13 @@
     <import resource="classpath:peel-core.xml"/>
     <import resource="classpath:peel-extensions.xml"/>
 
+    <!-- custom system beans -->
     <import resource="fixtures/systems.xml"/>
-    <import resource="fixtures/kmeans.xml"/>
-
+    <!-- k-means experiment beans -->
+    <import resource="fixtures/kmeans-test.xml"/>
+    <import resource="fixtures/kmeans-10k.xml"/>
+    <!--<import resource="fixtures/kmeans-50k.xml"/>-->
+    <!--<import resource="fixtures/kmeans-100k.xml"/>-->
+    <!--<import resource="fixtures/kmeans-250k.xml"/>-->
+    <!--<import resource="fixtures/kmeans-500k.xml"/>-->
 </beans>
