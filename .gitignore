@@ -1,0 +1,23 @@
+# User-specific stuff:
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+.idea/vcs.xml
+.idea/jsLibraryMappings.xml
+
+# Sensitive or high-churn files:
+.idea/dataSources.ids
+.idea/dataSources.xml
+.idea/dataSources.local.xml
+.idea/sqlDataSources.xml
+.idea/dynamic.xml
+.idea/uiDesigner.xml
+
+## File-based project format:
+*.iws
+
+# module output paths
+peel-flink-kmeans-bundle/target
+peel-flink-kmeans-datagens/target
+peel-flink-kmeans-flink-jobs/target
+peel-flink-kmeans-peelextensions/target

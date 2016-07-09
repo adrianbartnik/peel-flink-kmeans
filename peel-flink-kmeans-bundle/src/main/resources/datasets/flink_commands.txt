@@ -1,0 +1,41 @@
+Accuracy Tests (Ground Truth)
+=============================
+--points hdfs:///data_test.csv --output hdfs:///result_test_plain_10.csv --clustersize 4 --iterations 10 --diffiteration
+--points hdfs:///data_test.csv --output hdfs:///result_test_plain_5.csv --clustersize 4 --iterations 5 --diffiteration
+--points hdfs:///data_test.csv --output hdfs:///result_test_plusplus_10.csv --clustersize 4 --iterations 10 --diffiteration --plusplus
+--points hdfs:///data_test.csv --output hdfs:///result_test_plusplus_5.csv --clustersize 4 --iterations 5 --diffiteration --plusplus
+--points hdfs:///data_test.csv --output hdfs:///result_test_minibatch_10_20.csv --clustersize 4 --iterations 10 --diffiteration --minibatch --samplesize 20
+--points hdfs:///data_test.csv --output hdfs:///result_test_minibatch_10_10.csv --clustersize 4 --iterations 10 --diffiteration --minibatch --samplesize 10
+--points hdfs:///data_test.csv --output hdfs:///result_test_bisect_10_5.csv --clustersize 4 --iterations 10 --diffiteration --bisect --iterationsamples 5
+--points hdfs:///data_test.csv --output hdfs:///result_test_bisect_10_11.csv --clustersize 4 --iterations 10 --diffiteration --bisect --iterationsamples 11
+--points hdfs:///data_test.csv --output hdfs:///result_test_bisect_10_3.csv --clustersize 4 --iterations 10 --diffiteration --bisect --iterationsamples 3
+--points hdfs:///data_test.csv --output hdfs:///result_test_plusplus_minibatch_10_20.csv --clustersize 4 --iterations 10 --diffiteration --plusplus --minibatch --samplesize 20
+--points hdfs:///data_test.csv --output hdfs:///result_test_plusplus_minibatch_10_10.csv --clustersize 4 --iterations 10 --diffiteration --plusplus --minibatch --samplesize 10
+--points hdfs:///data_test.csv --output hdfs:///result_test_plusplus_bisect_10_5.csv --clustersize 4 --iterations 10 --diffiteration --plusplus --bisect --iterationsamples 5
+--points hdfs:///data_test.csv --output hdfs:///result_test_plusplus_bisect_10_11.csv --clustersize 4 --iterations 10 --diffiteration --plusplus --bisect --iterationsamples 11
+--points hdfs:///data_test.csv --output hdfs:///result_test_plusplus_bisect_10_3.csv --clustersize 4 --iterations 10 --diffiteration --plusplus --bisect --iterationsamples 3
+--points hdfs:///data_test.csv --output hdfs:///result_test_plusplus_minibatch_bisect_10_20_5.csv --clustersize 4 --iterations 10 --diffiteration --plusplus --minibatch --samplesize 20 --bisect --iterationsamples 5
+--points hdfs:///data_test.csv --output hdfs:///result_test_plusplus_minibatch_bisect_10_10_5.csv --clustersize 4 --iterations 10 --diffiteration --plusplus --minibatch --samplesize 10 --bisect --iterationsamples 5
+
+
+Performance Tests
+=================
+
+--points hdfs:///data_10k.csv --output hdfs:///result_10k_plain_10.csv --clustersize 10 --iterations 10 --diffiteration --outputcentroids
+--points hdfs:///data_10k.csv --output hdfs:///result_10k_plain_5.csv --clustersize 10 --iterations 5 --diffiteration --outputcentroids
+--points hdfs:///data_10k.csv --output hdfs:///result_10k_plusplus_10.csv --clustersize 10 --iterations 10 --diffiteration --plusplus --outputcentroids
+--points hdfs:///data_10k.csv --output hdfs:///result_10k_plusplus_5.csv --clustersize 10 --iterations 5 --diffiteration --plusplus --outputcentroids
+--points hdfs:///data_10k.csv --output hdfs:///result_10k_minibatch_10_1000.csv --clustersize 10 --iterations 10 --diffiteration --minibatch --samplesize 1000 --outputcentroids
+--points hdfs:///data_10k.csv --output hdfs:///result_10k_minibatch_10_100.csv --clustersize 10 --iterations 10 --diffiteration --minibatch --samplesize 100 --outputcentroids
+--points hdfs:///data_10k.csv --output hdfs:///result_10k_minibatch_10_500.csv --clustersize 10 --iterations 10 --diffiteration --minibatch --samplesize 500 --outputcentroids
+--points hdfs:///data_10k.csv --output hdfs:///result_10k_bisect_10_5.csv --clustersize 10 --iterations 10 --diffiteration --bisect --iterationsamples 5 --outputcentroids
+--points hdfs:///data_10k.csv --output hdfs:///result_10k_bisect_10_11.csv --clustersize 10 --iterations 10 --diffiteration --bisect --iterationsamples 11 --outputcentroids
+--points hdfs:///data_10k.csv --output hdfs:///result_10k_bisect_10_3.csv --clustersize 10 --iterations 10 --diffiteration --bisect --iterationsamples 3 --outputcentroids
+--points hdfs:///data_10k.csv --output hdfs:///result_10k_plusplus_minibatch_10_1000.csv --clustersize 10 --iterations 10 --diffiteration --plusplus --minibatch --samplesize 1000 --outputcentroids
+--points hdfs:///data_10k.csv --output hdfs:///result_10k_plusplus_minibatch_10_100.csv --clustersize 10 --iterations 10 --diffiteration --plusplus --minibatch --samplesize 100 --outputcentroids
+--points hdfs:///data_10k.csv --output hdfs:///result_10k_plusplus_minibatch_10_500.csv --clustersize 10 --iterations 10 --diffiteration --plusplus --minibatch --samplesize 500 --outputcentroids
+--points hdfs:///data_10k.csv --output hdfs:///result_10k_plusplus_bisect_10_5.csv --clustersize 10 --iterations 10 --diffiteration --plusplus --bisect --iterationsamples 5 --outputcentroids
+--points hdfs:///data_10k.csv --output hdfs:///result_10k_plusplus_bisect_10_11.csv --clustersize 10 --iterations 10 --diffiteration --plusplus --bisect --iterationsamples 11 --outputcentroids
+--points hdfs:///data_10k.csv --output hdfs:///result_10k_plusplus_bisect_10_3.csv --clustersize 10 --iterations 10 --diffiteration --plusplus --bisect --iterationsamples 3 --outputcentroids
+--points hdfs:///data_10k.csv --output hdfs:///result_10k_plusplus_minibatch_bisect_10_1000_5.csv --clustersize 10 --iterations 10 --diffiteration --plusplus --minibatch --samplesize 1000 --bisect --iterationsamples 5 --outputcentroids
+--points hdfs:///data_10k.csv --output hdfs:///result_10k_plusplus_minibatch_bisect_10_100_5.csv --clustersize 10 --iterations 10 --diffiteration --plusplus --minibatch --samplesize 100 --bisect --iterationsamples 5 --outputcentroids

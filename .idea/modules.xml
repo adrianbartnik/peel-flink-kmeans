@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/peel-flink-kmeans.iml" filepath="$PROJECT_DIR$/peel-flink-kmeans.iml" />
+      <module fileurl="file://$PROJECT_DIR$/peel-flink-kmeans-bundle/peel-flink-kmeans-bundle.iml" filepath="$PROJECT_DIR$/peel-flink-kmeans-bundle/peel-flink-kmeans-bundle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/peel-flink-kmeans-datagens/peel-flink-kmeans-datagens.iml" filepath="$PROJECT_DIR$/peel-flink-kmeans-datagens/peel-flink-kmeans-datagens.iml" />
+      <module fileurl="file://$PROJECT_DIR$/peel-flink-kmeans-flink-jobs/peel-flink-kmeans-flink-jobs.iml" filepath="$PROJECT_DIR$/peel-flink-kmeans-flink-jobs/peel-flink-kmeans-flink-jobs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/peel-flink-kmeans-peelextensions/peel-flink-kmeans-peelextensions.iml" filepath="$PROJECT_DIR$/peel-flink-kmeans-peelextensions/peel-flink-kmeans-peelextensions.iml" />
+    </modules>
+  </component>
+</project>
