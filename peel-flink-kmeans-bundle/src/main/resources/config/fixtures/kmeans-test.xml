@@ -29,7 +29,7 @@
               -v -c de.tu_berlin.dima.bdapro.benchmarks.kmeans.flink.KMeans             \
               ${app.path.apps}/peel-flink-kmeans-flink-jobs-1.0-SNAPSHOT.jar            \
               --points ${system.hadoop-2.path.input}/data_test.csv                      \
-              --output ${system.hadoop-2.path.output}/result-plain-5.csv                \
+              --output ${system.hadoop-2.path.output}/data_test/result-plain-5.csv                \
               --clustersize 4                                                           \
               --iteration 5                                                             \
               --differiteration
@@ -48,7 +48,7 @@
               -v -c de.tu_berlin.dima.bdapro.benchmarks.kmeans.flink.KMeans             \
               ${app.path.apps}/peel-flink-kmeans-flink-jobs-1.0-SNAPSHOT.jar            \
               --points ${system.hadoop-2.path.input}/data_test.csv                      \
-              --output ${system.hadoop-2.path.output}/result-plain-10.csv               \
+              --output ${system.hadoop-2.path.output}/data_test/result-plain-10.csv               \
               --clustersize 4                                                           \
               --iteration 10                                                            \
               --differiteration
@@ -67,7 +67,7 @@
               -v -c de.tu_berlin.dima.bdapro.benchmarks.kmeans.flink.KMeans             \
               ${app.path.apps}/peel-flink-kmeans-flink-jobs-1.0-SNAPSHOT.jar            \
               --points ${system.hadoop-2.path.input}/data_test.csv                      \
-              --output ${system.hadoop-2.path.output}/result-plusplus-5.csv             \
+              --output ${system.hadoop-2.path.output}/data_test/result-plusplus-5.csv             \
               --clustersize 4                                                           \
               --iteration 5                                                             \
               --differiteration                                                         \
@@ -87,7 +87,7 @@
               -v -c de.tu_berlin.dima.bdapro.benchmarks.kmeans.flink.KMeans             \
               ${app.path.apps}/peel-flink-kmeans-flink-jobs-1.0-SNAPSHOT.jar            \
               --points ${system.hadoop-2.path.input}/data_test.csv                      \
-              --output ${system.hadoop-2.path.output}/result-plusplus-10.csv            \
+              --output ${system.hadoop-2.path.output}/data_test/result-plusplus-10.csv            \
               --clustersize 4                                                           \
               --iteration 10                                                            \
               --differiteration                                                         \
@@ -107,7 +107,7 @@
               -v -c de.tu_berlin.dima.bdapro.benchmarks.kmeans.flink.KMeans             \
               ${app.path.apps}/peel-flink-kmeans-flink-jobs-1.0-SNAPSHOT.jar            \
               --points ${system.hadoop-2.path.input}/data_test.csv                      \
-              --output ${system.hadoop-2.path.output}/result-minibatch-10.csv           \
+              --output ${system.hadoop-2.path.output}/data_test/result-minibatch-10.csv           \
               --clustersize 4                                                           \
               --iteration 10                                                            \
               --differiteration                                                         \
@@ -128,7 +128,7 @@
               -v -c de.tu_berlin.dima.bdapro.benchmarks.kmeans.flink.KMeans             \
               ${app.path.apps}/peel-flink-kmeans-flink-jobs-1.0-SNAPSHOT.jar            \
               --points ${system.hadoop-2.path.input}/data_test.csv                      \
-              --output ${system.hadoop-2.path.output}/result-minibatch-20.csv           \
+              --output ${system.hadoop-2.path.output}/data_test/result-minibatch-20.csv           \
               --clustersize 4                                                           \
               --iteration 10                                                            \
               --differiteration                                                         \
@@ -149,7 +149,7 @@
               -v -c de.tu_berlin.dima.bdapro.benchmarks.kmeans.flink.KMeans             \
               ${app.path.apps}/peel-flink-kmeans-flink-jobs-1.0-SNAPSHOT.jar            \
               --points ${system.hadoop-2.path.input}/data_test.csv                      \
-              --output ${system.hadoop-2.path.output}/result-bisect-10-3.csv            \
+              --output ${system.hadoop-2.path.output}/data_test/result-bisect-10-3.csv            \
               --clustersize 4                                                           \
               --iteration 10                                                            \
               --differiteration                                                         \
@@ -170,7 +170,7 @@
               -v -c de.tu_berlin.dima.bdapro.benchmarks.kmeans.flink.KMeans             \
               ${app.path.apps}/peel-flink-kmeans-flink-jobs-1.0-SNAPSHOT.jar            \
               --points ${system.hadoop-2.path.input}/data_test.csv                      \
-              --output ${system.hadoop-2.path.output}/result-bisect-10-5.csv            \
+              --output ${system.hadoop-2.path.output}/data_test/result-bisect-10-5.csv            \
               --clustersize 4                                                           \
               --iteration 10                                                            \
               --differiteration                                                         \
@@ -191,7 +191,7 @@
               -v -c de.tu_berlin.dima.bdapro.benchmarks.kmeans.flink.KMeans             \
               ${app.path.apps}/peel-flink-kmeans-flink-jobs-1.0-SNAPSHOT.jar            \
               --points ${system.hadoop-2.path.input}/data_test.csv                      \
-              --output ${system.hadoop-2.path.output}/result-bisect-10-11.csv           \
+              --output ${system.hadoop-2.path.output}/data_test/result-bisect-10-11.csv           \
               --clustersize 4                                                           \
               --iteration 10                                                            \
               --differiteration                                                         \
