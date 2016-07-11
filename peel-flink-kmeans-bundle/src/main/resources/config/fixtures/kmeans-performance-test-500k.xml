@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--************************************************************************
+    * Data Sets
+    *************************************************************************-->
+
+    <bean id="dataset.kmeans-500k.static.points" class="org.peelframework.core.beans.data.CopiedDataSet">
+        <constructor-arg name="src" value="${app.path.datasets}/points-500k.csv"/>
+        <constructor-arg name="dst" value="${system.hadoop-2.path.input}/points-500k.csv"/>
+        <constructor-arg name="fs" ref="hdfs-2.7.1"/>
+    </bean>
+
+    <!--************************************************************************
+    * Experiments
+    *************************************************************************-->
+
+    <!--************************************************************************
+    * Suites
+    *************************************************************************-->
+
+    <bean id="kmeans-performance-test-500k.plain-suite" class="org.peelframework.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <bean class="org.peelframework.core.beans.experiment.ExperimentSequence">
+                <constructor-arg name="paramName" value="iterations"/>
+                <constructor-arg name="paramVals">
+                    <list>
+                        <value>5</value>
+                        <value>10</value>
+                    </list>
+                </constructor-arg>
+                <constructor-arg name="prototypes">
+                    <list value-type="org.peelframework.core.beans.experiment.Experiment">
+                        <bean parent="experiment.flink.kmeans.plain">
+                            <constructor-arg name="name" value="kmeans.flink.plain.__iterations__"/>
+                            <constructor-arg name="inputs">
+                                <set>
+                                    <ref bean="dataset.kmeans-500k.static.points" />
+                                </set>
+                            </constructor-arg>
+                            <constructor-arg name="config">
+                                <value><![CDATA[
+                                  app.kmeans.plain.iterations = __iterations__
+                                  app.kmeans.plain.clusterSize = 10
+                                  app.kmeans.dataset.points = "points-500k.csv"
+                                ]]></value>
+                            </constructor-arg>
+                        </bean>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="kmeans-performance-test-500k.plusplus-suite" class="org.peelframework.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <bean class="org.peelframework.core.beans.experiment.ExperimentSequence">
+                <constructor-arg name="paramName" value="iterations"/>
+                <constructor-arg name="paramVals">
+                    <list>
+                        <value>5</value>
+                        <value>10</value>
+                    </list>
+                </constructor-arg>
+                <constructor-arg name="prototypes">
+                    <list value-type="org.peelframework.core.beans.experiment.Experiment">
+                        <bean parent="experiment.flink.kmeans.plusplus">
+                            <constructor-arg name="name" value="kmeans.flink.plusplus.__iterations__"/>
+                            <constructor-arg name="inputs">
+                                <set>
+                                    <ref bean="dataset.kmeans-500k.static.points" />
+                                </set>
+                            </constructor-arg>
+                            <constructor-arg name="config">
+                                <value><![CDATA[
+                                  app.kmeans.plusplus.iterations = __iterations__
+                                  app.kmeans.plusplus.clusterSize = 10
+                                  app.kmeans.dataset.points = "points-500k.csv"
+                                ]]></value>
+                            </constructor-arg>
+                        </bean>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="kmeans-performance-test-500k.minibatch-suite" class="org.peelframework.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <bean class="org.peelframework.core.beans.experiment.ExperimentSequence">
+                <constructor-arg name="paramName" value="sampleSize"/>
+                <constructor-arg name="paramVals">
+                    <list>
+                        <value>100</value>
+                        <value>500</value>
+                        <value>1000</value>
+                    </list>
+                </constructor-arg>
+                <constructor-arg name="prototypes">
+                    <list value-type="org.peelframework.core.beans.experiment.Experiment">
+                        <bean parent="experiment.flink.kmeans.minibatch">
+                            <constructor-arg name="name" value="kmeans.flink.minibatch.__sampleSize__"/>
+                            <constructor-arg name="inputs">
+                                <set>
+                                    <ref bean="dataset.kmeans-500k.static.points" />
+                                </set>
+                            </constructor-arg>
+                            <constructor-arg name="config">
+                                <value><![CDATA[
+                                  app.kmeans.minibatch.iterations = 10
+                                  app.kmeans.minibatch.clusterSize = 10
+                                  app.kmeans.minibatch.sampleSize = __sampleSize__
+                                  app.kmeans.dataset.points = "points-500k.csv"
+                                ]]></value>
+                            </constructor-arg>
+                        </bean>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="kmeans-performance-test-500k.plusplus-minibatch" class="org.peelframework.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <bean class="org.peelframework.core.beans.experiment.ExperimentSequence">
+                <constructor-arg name="paramName" value="sampleSize"/>
+                <constructor-arg name="paramVals">
+                    <list>
+                        <value>100</value>
+                        <value>500</value>
+                        <value>1000</value>
+                    </list>
+                </constructor-arg>
+                <constructor-arg name="prototypes">
+                    <list value-type="org.peelframework.core.beans.experiment.Experiment">
+                        <bean parent="experiment.flink.kmeans.plusplus-minibatch">
+                            <constructor-arg name="name" value="kmeans.flink.plusplus-minibatch.__sampleSize__"/>
+                            <constructor-arg name="inputs">
+                                <set>
+                                    <ref bean="dataset.kmeans-500k.static.points" />
+                                </set>
+                            </constructor-arg>
+                            <constructor-arg name="config">
+                                <value><![CDATA[
+                                  app.kmeans.dataset.points = "points-500k.csv"
+                                  app.kmeans.plusplus-minibatch.iterations = 10
+                                  app.kmeans.plusplus-minibatch.clusterSize = 10
+                                  app.kmeans.plusplus-minibatch.sampleSize = __sampleSize__
+                                ]]></value>
+                            </constructor-arg>
+                        </bean>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+    </bean>
+</beans>

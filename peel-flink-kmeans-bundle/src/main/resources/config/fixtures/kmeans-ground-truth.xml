@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--************************************************************************
+    * Data Sets
+    *************************************************************************-->
+
+    <bean id="dataset.kmeans-test.static.points" class="org.peelframework.core.beans.data.CopiedDataSet">
+        <constructor-arg name="src" value="${app.path.datasets}/data_test.csv"/>
+        <constructor-arg name="dst" value="${system.hadoop-2.path.input}/data_test.csv"/>
+        <constructor-arg name="fs" ref="hdfs-2.7.1"/>
+    </bean>
+
+    <!--************************************************************************
+    * Suites
+    *************************************************************************-->
+
+    <bean id="kmeans-ground-truth.plain-suite" class="org.peelframework.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <bean class="org.peelframework.core.beans.experiment.ExperimentSequence">
+                <constructor-arg name="paramName" value="iterations"/>
+                <constructor-arg name="paramVals">
+                    <list>
+                        <value>5</value>
+                        <value>10</value>
+                    </list>
+                </constructor-arg>
+                <constructor-arg name="prototypes">
+                    <list value-type="org.peelframework.core.beans.experiment.Experiment">
+                        <bean parent="experiment.flink.kmeans.plain">
+                            <constructor-arg name="name" value="kmeans.flink.plain.__iterations__"/>
+                            <constructor-arg name="inputs">
+                                <set>
+                                    <ref bean="dataset.kmeans-test.static.points" />
+                                </set>
+                            </constructor-arg>
+                            <constructor-arg name="config">
+                                <value><![CDATA[
+                                  app.kmeans.dataset.points = "data_test.csv"
+                                  app.kmeans.plain.iterations = __iterations__
+                                  app.kmeans.plain.clusterSize = 4
+                                ]]></value>
+                            </constructor-arg>
+                        </bean>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="kmeans-ground-truth.plusplus-suite" class="org.peelframework.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <bean class="org.peelframework.core.beans.experiment.ExperimentSequence">
+                <constructor-arg name="paramName" value="iterations"/>
+                <constructor-arg name="paramVals">
+                    <list>
+                        <value>5</value>
+                        <value>10</value>
+                    </list>
+                </constructor-arg>
+                <constructor-arg name="prototypes">
+                    <list value-type="org.peelframework.core.beans.experiment.Experiment">
+                        <bean parent="experiment.flink.kmeans.plusplus">
+                            <constructor-arg name="name" value="kmeans.flink.plusplus.__iterations__"/>
+                            <constructor-arg name="inputs">
+                                <set>
+                                    <ref bean="dataset.kmeans-test.static.points" />
+                                </set>
+                            </constructor-arg>
+                            <constructor-arg name="config">
+                                <value><![CDATA[
+                                  app.kmeans.dataset.points = "data_test.csv"
+                                  app.kmeans.plusplus.iterations = __iterations__
+                                  app.kmeans.plusplus.clusterSize = 4
+                                ]]></value>
+                            </constructor-arg>
+                        </bean>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="kmeans-ground-truth.plusplus-diffiteration-suite" class="org.peelframework.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <bean class="org.peelframework.core.beans.experiment.ExperimentSequence">
+                <constructor-arg name="paramName" value="iterations"/>
+                <constructor-arg name="paramVals">
+                    <list>
+                        <value>5</value>
+                        <value>10</value>
+                    </list>
+                </constructor-arg>
+                <constructor-arg name="prototypes">
+                    <list value-type="org.peelframework.core.beans.experiment.Experiment">
+                        <bean parent="experiment.flink.kmeans.plusplus-diffiteration">
+                            <constructor-arg name="name" value="kmeans.flink.plusplus.__iterations__"/>
+                            <constructor-arg name="inputs">
+                                <set>
+                                    <ref bean="dataset.kmeans-test.static.points" />
+                                </set>
+                            </constructor-arg>
+                            <constructor-arg name="config">
+                                <value><![CDATA[
+                                  app.kmeans.dataset.points = "data_test.csv"
+                                  app.kmeans.plusplus.iterations = __iterations__
+                                  app.kmeans.plusplus.clusterSize = 4
+                                ]]></value>
+                            </constructor-arg>
+                        </bean>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="kmeans-ground-truth.minibatch-suite" class="org.peelframework.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <bean class="org.peelframework.core.beans.experiment.ExperimentSequence">
+                <constructor-arg name="paramName" value="sampleSize"/>
+                <constructor-arg name="paramVals">
+                    <list>
+                        <value>10</value>
+                        <value>20</value>
+                    </list>
+                </constructor-arg>
+                <constructor-arg name="prototypes">
+                    <list value-type="org.peelframework.core.beans.experiment.Experiment">
+                        <bean parent="experiment.flink.kmeans.minibatch">
+                            <constructor-arg name="name" value="kmeans.flink.minibatch.__sampleSize__"/>
+                            <constructor-arg name="inputs">
+                                <set>
+                                    <ref bean="dataset.kmeans-test.static.points" />
+                                </set>
+                            </constructor-arg>
+                            <constructor-arg name="config">
+                                <value><![CDATA[
+                                  app.kmeans.dataset.points = "data_test.csv"
+                                  app.kmeans.minibatch.iterations = 10
+                                  app.kmeans.minibatch.clusterSize = 4
+                                  app.kmeans.minibatch.sampleSize = __sampleSize__
+                                ]]></value>
+                            </constructor-arg>
+                        </bean>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="kmeans-ground-truth.bisecting-suite" class="org.peelframework.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <bean class="org.peelframework.core.beans.experiment.ExperimentSequence">
+                <constructor-arg name="paramName" value="iterationSamples"/>
+                <constructor-arg name="paramVals">
+                    <list>
+                        <value>3</value>
+                        <value>5</value>
+                        <value>11</value>
+                    </list>
+                </constructor-arg>
+                <constructor-arg name="prototypes">
+                    <list value-type="org.peelframework.core.beans.experiment.Experiment">
+                        <bean parent="experiment.flink.kmeans.bisecting">
+                            <constructor-arg name="name" value="kmeans.flink.bisecting.__iterationSamples__"/>
+                            <constructor-arg name="inputs">
+                                <set>
+                                    <ref bean="dataset.kmeans-test.static.points" />
+                                </set>
+                            </constructor-arg>
+                            <constructor-arg name="config">
+                                <value><![CDATA[
+                                  app.kmeans.dataset.points = "data_test.csv"
+                                  app.kmeans.bisecting.iterations = 10
+                                  app.kmeans.bisecting.clusterSize = 4
+                                  app.kmeans.bisecting.iterationSamples = __iterationSamples__
+                                ]]></value>
+                            </constructor-arg>
+                        </bean>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="kmeans-ground-truth.plusplus-minibatch-suite" class="org.peelframework.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <bean class="org.peelframework.core.beans.experiment.ExperimentSequence">
+                <constructor-arg name="paramName" value="sampleSize"/>
+                <constructor-arg name="paramVals">
+                    <list>
+                        <value>10</value>
+                        <value>20</value>
+                    </list>
+                </constructor-arg>
+                <constructor-arg name="prototypes">
+                    <list value-type="org.peelframework.core.beans.experiment.Experiment">
+                        <bean parent="experiment.flink.kmeans.plusplus-minibatch">
+                            <constructor-arg name="name" value="kmeans.flink.plusplus-minibatch.__sampleSize__"/>
+                            <constructor-arg name="inputs">
+                                <set>
+                                    <ref bean="dataset.kmeans-test.static.points" />
+                                </set>
+                            </constructor-arg>
+                            <constructor-arg name="config">
+                                <value><![CDATA[
+                                  app.kmeans.dataset.points = "data_test.csv"
+                                  app.kmeans.plusplus-minibatch.iterations = 10
+                                  app.kmeans.plusplus-minibatch.clusterSize = 4
+                                  app.kmeans.plusplus-minibatch.sampleSize = __sampleSize__
+                                ]]></value>
+                            </constructor-arg>
+                        </bean>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="kmeans-ground-truth.plusplus-bisecting-suite" class="org.peelframework.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <bean class="org.peelframework.core.beans.experiment.ExperimentSequence">
+                <constructor-arg name="paramName" value="iterationSamples"/>
+                <constructor-arg name="paramVals">
+                    <list>
+                        <value>3</value>
+                        <value>5</value>
+                        <value>11</value>
+                    </list>
+                </constructor-arg>
+                <constructor-arg name="prototypes">
+                    <list value-type="org.peelframework.core.beans.experiment.Experiment">
+                        <bean parent="experiment.flink.kmeans.plusplus-bisecting">
+                            <constructor-arg name="name" value="kmeans.flink.plusplus-bisecting.__iterationSamples__"/>
+                            <constructor-arg name="inputs">
+                                <set>
+                                    <ref bean="dataset.kmeans-test.static.points" />
+                                </set>
+                            </constructor-arg>
+                            <constructor-arg name="config">
+                                <value><![CDATA[
+                                  app.kmeans.dataset.points = "data_test.csv"
+                                  app.kmeans.plusplus-bisecting.iterations = 10
+                                  app.kmeans.plusplus-bisecting.clusterSize = 4
+                                  app.kmeans.plusplus-bisecting.iterationSamples = __iterationSamples__
+                                  ]]></value>
+                            </constructor-arg>
+                        </bean>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="kmeans-ground-truth.plusplus-minibatch-bisecting-suite" class="org.peelframework.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <bean class="org.peelframework.core.beans.experiment.ExperimentSequence">
+                <constructor-arg name="paramName" value="sampleSize"/>
+                <constructor-arg name="paramVals">
+                    <list>
+                        <value>10</value>
+                        <value>20</value>
+                    </list>
+                </constructor-arg>
+                <constructor-arg name="prototypes">
+                    <list value-type="org.peelframework.core.beans.experiment.Experiment">
+                        <bean parent="experiment.flink.kmeans.plusplus-minibatch-bisecting">
+                            <constructor-arg name="name" value="kmeans.flink.plusplus-minibatch-bisecting.__sampleSize__"/>
+                            <constructor-arg name="inputs">
+                                <set>
+                                    <ref bean="dataset.kmeans-test.static.points" />
+                                </set>
+                            </constructor-arg>
+                            <constructor-arg name="config">
+                                <value><![CDATA[
+                                  app.kmeans.dataset.points = "data_test.csv"
+                                  app.kmeans.plusplus-minibatch-bisecting.iterations = 10
+                                  app.kmeans.plusplus-minibatch-bisecting.clusterSize = 4
+                                  app.kmeans.plusplus-minibatch-bisecting.iterationSamples = 5
+                                  app.kmeans.plusplus-minibatch-bisecting.sampleSize = __sampleSize__
+                                  ]]></value>
+                            </constructor-arg>
+                        </bean>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+</beans>

@@ -17,7 +17,6 @@ Accuracy Tests (Ground Truth)
 --points hdfs:///data_test.csv --output hdfs:///result_test_plusplus_minibatch_bisect_10_20_5.csv --clustersize 4 --iterations 10 --diffiteration --plusplus --minibatch --samplesize 20 --bisect --iterationsamples 5
 --points hdfs:///data_test.csv --output hdfs:///result_test_plusplus_minibatch_bisect_10_10_5.csv --clustersize 4 --iterations 10 --diffiteration --plusplus --minibatch --samplesize 10 --bisect --iterationsamples 5
 
-
 Performance Tests
 =================
 
@@ -39,6 +38,8 @@ Performance Tests
 --points hdfs:///data_10k.csv --output hdfs:///result_10k_plusplus_bisect_10_3.csv --clustersize 10 --iterations 10 --diffiteration --plusplus --bisect --iterationsamples 3 --outputcentroids
 --points hdfs:///data_10k.csv --output hdfs:///result_10k_plusplus_minibatch_bisect_10_1000_5.csv --clustersize 10 --iterations 10 --diffiteration --plusplus --minibatch --samplesize 1000 --bisect --iterationsamples 5 --outputcentroids
 --points hdfs:///data_10k.csv --output hdfs:///result_10k_plusplus_minibatch_bisect_10_100_5.csv --clustersize 10 --iterations 10 --diffiteration --plusplus --minibatch --samplesize 100 --bisect --iterationsamples 5 --outputcentroids
+
+--clustersize 10 --iterations 10 --minibatch --samplesize 1000 --bisect 5 --outputcentroids
 
 kmeans-test.plain-5
 kmeans-test.plain-10
