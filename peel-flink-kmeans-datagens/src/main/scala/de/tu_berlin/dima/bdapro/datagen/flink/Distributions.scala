@@ -5,12 +5,8 @@ import org.apache.commons.math3.random.Well19937c
 
 object Distributions {
 
-  trait ContinousDistribution {
-    def sample(cumulativeProbability: Double): Double
-  }
-
-  case class ContinousUniform(k: Int) extends ContinousDistribution {
-    val distribution = new UniformRealDistribution(0, k - 1)
+  case class ContinousUniform(upper: Int, lower: Int = 0) {
+    val distribution = new UniformRealDistribution(lower, upper)
 
     def sample(cp: Double) = distribution.inverseCumulativeProbability(cp)
   }

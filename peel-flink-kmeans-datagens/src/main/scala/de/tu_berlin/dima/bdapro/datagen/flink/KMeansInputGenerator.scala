@@ -12,7 +12,7 @@ object KMeansInputGenerator {
   def main(args: Array[String]): Unit = {
 
     if (args.length <= 6) {
-      Console.err.println("Usage: <jar> #Tasks numberOfClusters pointsPerCluster sizeX sizeY stdDeviationMax outputPath seed")
+      Console.err.println("Usage: <jar> #Tasks numberOfClusters pointsPerCluster sizeX sizeY varianceDeviationMax outputPath seed")
       System.exit(-1)
     }
 
@@ -21,7 +21,7 @@ object KMeansInputGenerator {
     val pointsPerCluster = args(2).toInt
     val sizeX = args(3).toInt
     val sizeY = args(4).toInt
-    val stdDeviationMax = args(5).toInt
+    val varianceDeviationMax = args(5).toInt
     val outputPath = args(6)
 
     val SEED = if (args.length != 8) {
@@ -32,33 +32,40 @@ object KMeansInputGenerator {
 
     val xDistribution = ContinousUniform(sizeX)
     val yDistribution = ContinousUniform(sizeY)
-    val stdDeviationDistribution = ContinousUniform(stdDeviationMax)
+    val varianceDeviationDistribution = ContinousUniform(varianceDeviationMax)
+    val correlationDeviationDistribution = ContinousUniform(lower = -1, upper = 1)
 
     val environment = ExecutionEnvironment.getExecutionEnvironment
 
     environment
       .fromParallelCollection(new NumberSequenceIterator(1, numberOfClusters))
       .setParallelism(numberOfTasks)
-      .map(_ * 5)
       .flatMap((clusterIndex, collector: Collector[(Long, Array[Double])]) => {
 
-        val mean = Array[Double](xDistribution.sample(new RanHash(SEED + clusterIndex).next()),
-          yDistribution.sample(new RanHash(SEED + clusterIndex + 1).next()))
+        val random = new RanHash(SEED + clusterIndex)
+
+        val mean = Array[Double](xDistribution.sample(random.next()),
+          yDistribution.sample(random.next()))
 
         val covar = Array.ofDim[Double](2, 2)
 
-        covar(0)(0) = stdDeviationDistribution.sample(new RanHash(SEED + clusterIndex + 2).next())
-        covar(1)(1) = stdDeviationDistribution.sample(new RanHash(SEED + clusterIndex + 3).next())
-        covar(0)(1) = 0 // TODO: Generate random valid covariance matrix
+        val varx = varianceDeviationDistribution.sample(random.next())
+        val vary = varianceDeviationDistribution.sample(random.next())
+        val correlation = correlationDeviationDistribution.sample(random.next())
+
+        // Multiply with transposed matrix
+        covar(0)(0) = varx * varx + correlation * correlation
+        covar(0)(1) = varx * correlation + vary * correlation
         covar(1)(0) = covar(0)(1)
+        covar(1)(1) = vary * vary + correlation * correlation
 
         val distribution = MultiVariate(mean, covar, SEED + clusterIndex.toInt)
 
-        for (a <- 1 to pointsPerCluster) {
+        for (a <- 1 to random.nextInt(pointsPerCluster)) {
           collector.collect((clusterIndex, distribution.sample()))
         }
       })
-      .map(point => s"${point._1 / 5},${point._2(0)},${point._2(1)}")
+      .map(point => s"${point._1},${point._2(0)},${point._2(1)}")
       .writeAsText(outputPath, FileSystem.WriteMode.OVERWRITE)
 
     environment.execute(s"ConwayInputGenerator")
