@@ -6,6 +6,7 @@ import org.apache.flink.api.java.sampling._
 import org.apache.flink.api.java.utils.ParameterTool
 import org.apache.flink.api.scala._
 import org.apache.flink.configuration.Configuration
+import org.apache.flink.core.fs.FileSystem.WriteMode
 import org.apache.flink.util.Collector
 
 import scala.collection.JavaConverters._
@@ -84,9 +85,9 @@ object KMeans {
 
     if (params.has("output")) {
       if (opt.outputCentroids)
-        clusteredCentroids.writeAsCsv(params.get("output"), "\n", ",")
+        clusteredCentroids.writeAsCsv(params.get("output"), "\n", ",", WriteMode.OVERWRITE)
       else
-        clusteredPoints.writeAsCsv(params.get("output"), "\n", ",")
+        clusteredPoints.writeAsCsv(params.get("output"), "\n", ",", WriteMode.OVERWRITE)
 
       env.execute()
     }
