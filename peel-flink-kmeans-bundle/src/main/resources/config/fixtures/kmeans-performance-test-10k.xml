@@ -10,7 +10,7 @@
     <bean id="dataset.kmeans-10k.static.points" class="org.peelframework.core.beans.data.CopiedDataSet">
         <constructor-arg name="src" value="${app.path.datasets}/points-10k.csv"/>
         <constructor-arg name="dst" value="${system.hadoop-2.path.input}/points-10k.csv"/>
-        <constructor-arg name="fs" ref="hdfs-2.7.1"/>
+        <constructor-arg name="fs" ref="provided-hdfs"/>
     </bean>
 
     <!--************************************************************************
@@ -205,7 +205,7 @@
                             <constructor-arg name="name" value="kmeans.flink.plain.__iterations__"/>
                             <constructor-arg name="inputs">
                                 <set>
-                                    <ref bean="dataset.kmeans-10k.static.points" />
+                                    <ref bean="dataset.kmeans-10k.static.points"/>
                                 </set>
                             </constructor-arg>
                             <constructor-arg name="config">
@@ -238,7 +238,7 @@
                             <constructor-arg name="name" value="kmeans.flink.plusplus.__iterations__"/>
                             <constructor-arg name="inputs">
                                 <set>
-                                    <ref bean="dataset.kmeans-10k.static.points" />
+                                    <ref bean="dataset.kmeans-10k.static.points"/>
                                 </set>
                             </constructor-arg>
                             <constructor-arg name="config">
@@ -272,7 +272,7 @@
                             <constructor-arg name="name" value="kmeans.flink.minibatch.__sampleSize__"/>
                             <constructor-arg name="inputs">
                                 <set>
-                                    <ref bean="dataset.kmeans-10k.static.points" />
+                                    <ref bean="dataset.kmeans-10k.static.points"/>
                                 </set>
                             </constructor-arg>
                             <constructor-arg name="config">
@@ -307,7 +307,7 @@
                             <constructor-arg name="name" value="kmeans.flink.bisecting.__iterationSamples__"/>
                             <constructor-arg name="inputs">
                                 <set>
-                                    <ref bean="dataset.kmeans-10k.static.points" />
+                                    <ref bean="dataset.kmeans-10k.static.points"/>
                                 </set>
                             </constructor-arg>
                             <constructor-arg name="config">
@@ -342,7 +342,7 @@
                             <constructor-arg name="name" value="kmeans.flink.plusplus-minibatch.__sampleSize__"/>
                             <constructor-arg name="inputs">
                                 <set>
-                                    <ref bean="dataset.kmeans-10k.static.points" />
+                                    <ref bean="dataset.kmeans-10k.static.points"/>
                                 </set>
                             </constructor-arg>
                             <constructor-arg name="config">
@@ -377,7 +377,7 @@
                             <constructor-arg name="name" value="kmeans.flink.plusplus-bisecting.__iterationSamples__"/>
                             <constructor-arg name="inputs">
                                 <set>
-                                    <ref bean="dataset.kmeans-10k.static.points" />
+                                    <ref bean="dataset.kmeans-10k.static.points"/>
                                 </set>
                             </constructor-arg>
                             <constructor-arg name="config">
@@ -411,7 +411,7 @@
                             <constructor-arg name="name" value="kmeans.flink.plusplus-minibatch-bisecting.__sampleSize__"/>
                             <constructor-arg name="inputs">
                                 <set>
-                                    <ref bean="dataset.kmeans-10k.static.points" />
+                                    <ref bean="dataset.kmeans-10k.static.points"/>
                                 </set>
                             </constructor-arg>
                             <constructor-arg name="config">

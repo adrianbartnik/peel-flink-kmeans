@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--************************************************************************
+    * Data Sets
+    *************************************************************************-->
+
+    <bean id="dataset.kmeans-variance1" class="org.peelframework.core.beans.data.CopiedDataSet">
+        <constructor-arg name="src" value="${app.path.datasets}/variance-1-points.csv"/>
+        <constructor-arg name="dst" value="${system.hadoop-2.path.input}/variance-1-points.csv"/>
+        <constructor-arg name="fs" ref="provided-hdfs"/>
+    </bean>
+
+    <bean id="dataset.kmeans-variance2" class="org.peelframework.core.beans.data.CopiedDataSet">
+        <constructor-arg name="src" value="${app.path.datasets}/variance-2-points.csv"/>
+        <constructor-arg name="dst" value="${system.hadoop-2.path.input}/variance-2-points.csv"/>
+        <constructor-arg name="fs" ref="provided-hdfs"/>
+    </bean>
+
+    <bean id="dataset.kmeans-variance3" class="org.peelframework.core.beans.data.CopiedDataSet">
+        <constructor-arg name="src" value="${app.path.datasets}/variance-3-points.csv"/>
+        <constructor-arg name="dst" value="${system.hadoop-2.path.input}/variance-3-points.csv"/>
+        <constructor-arg name="fs" ref="provided-hdfs"/>
+    </bean>
+
+    <bean id="dataset.kmeans-variance4" class="org.peelframework.core.beans.data.CopiedDataSet">
+        <constructor-arg name="src" value="${app.path.datasets}/variance-4-points.csv"/>
+        <constructor-arg name="dst" value="${system.hadoop-2.path.input}/variance-4-points.csv"/>
+        <constructor-arg name="fs" ref="provided-hdfs"/>
+    </bean>
+
+    <bean id="dataset.kmeans-variance5" class="org.peelframework.core.beans.data.CopiedDataSet">
+        <constructor-arg name="src" value="${app.path.datasets}/variance-5-points.csv"/>
+        <constructor-arg name="dst" value="${system.hadoop-2.path.input}/variance-5-points.csv"/>
+        <constructor-arg name="fs" ref="provided-hdfs"/>
+    </bean>
+
+    <bean id="output.kmeans.variance" class="org.peelframework.core.beans.data.ExperimentOutput">
+        <constructor-arg name="path" value="${system.hadoop-2.path.output}/output-"/> <!-- Not sure what the output is really used for -->
+        <constructor-arg name="fs" ref="provided-hdfs"/>
+    </bean>
+
+    <!--************************************************************************
+    * Experiments
+    *************************************************************************-->
+
+    <bean id="experiment.flink.kmeans.variance.plain" parent="experiment.flink-1.0.3" abstract="true">
+        <constructor-arg name="command">
+            <value><![CDATA[
+              -v -c de.tu_berlin.dima.bdapro.benchmarks.kmeans.flink.KMeans             \
+              ${app.path.apps}/peel-flink-kmeans-flink-jobs-1.0-SNAPSHOT.jar            \
+              --points ${system.hadoop-2.path.input}/${app.kmeans.dataset.points}       \
+              --clustersize ${app.kmeans.plain.clusterSize}                             \
+              --iterations ${app.kmeans.plain.iterations}                               \
+              --output ${system.hadoop-2.path.output}${app.kmeans.output}
+            ]]></value>
+        </constructor-arg>
+        <constructor-arg name="outputs">
+            <set value-type="org.peelframework.core.beans.data.ExperimentOutput">
+                <ref bean="output.kmeans.variance"/>
+            </set>
+        </constructor-arg>
+    </bean>
+
+    <bean id="experiment.flink.kmeans.variance.plusplus" parent="experiment.flink-1.0.3" abstract="true">
+        <constructor-arg name="command">
+            <value><![CDATA[
+              -v -c de.tu_berlin.dima.bdapro.benchmarks.kmeans.flink.KMeans             \
+              ${app.path.apps}/peel-flink-kmeans-flink-jobs-1.0-SNAPSHOT.jar            \
+              --points ${system.hadoop-2.path.input}/${app.kmeans.dataset.points}       \
+              --clustersize ${app.kmeans.plusplus.clusterSize}                          \
+              --iterations ${app.kmeans.plusplus.iterations}                            \
+              --plusplus                                                                \
+              --output ${system.hadoop-2.path.output}${app.kmeans.output}
+            ]]></value>
+        </constructor-arg>
+        <constructor-arg name="outputs">
+            <set value-type="org.peelframework.core.beans.data.ExperimentOutput">
+                <ref bean="output.kmeans.variance"/>
+            </set>
+        </constructor-arg>
+    </bean>
+
+    <bean id="experiment.flink.kmeans.variance.minibatch" parent="experiment.flink-1.0.3" abstract="true">
+        <constructor-arg name="command">
+            <value><![CDATA[
+              -v -c de.tu_berlin.dima.bdapro.benchmarks.kmeans.flink.KMeans             \
+              ${app.path.apps}/peel-flink-kmeans-flink-jobs-1.0-SNAPSHOT.jar            \
+              --points ${system.hadoop-2.path.input}/${app.kmeans.dataset.points}       \
+              --clustersize ${app.kmeans.minibatch.clusterSize}                         \
+              --iterations ${app.kmeans.minibatch.iterations}                           \
+              --minibatch                                                               \
+              --samplesize ${app.kmeans.minibatch.sampleSize}                           \
+              --output ${system.hadoop-2.path.output}${app.kmeans.output}
+            ]]></value>
+        </constructor-arg>
+        <constructor-arg name="outputs">
+            <set value-type="org.peelframework.core.beans.data.ExperimentOutput">
+                <ref bean="output.kmeans.variance"/>
+            </set>
+        </constructor-arg>
+    </bean>
+
+    <bean id="experiment.flink.kmeans.variance.bisecting" parent="experiment.flink-1.0.3" abstract="true">
+        <constructor-arg name="command">
+            <value><![CDATA[
+              -v -c de.tu_berlin.dima.bdapro.benchmarks.kmeans.flink.KMeans             \
+              ${app.path.apps}/peel-flink-kmeans-flink-jobs-1.0-SNAPSHOT.jar            \
+              --points ${system.hadoop-2.path.input}/${app.kmeans.dataset.points}       \
+              --clustersize ${app.kmeans.bisecting.clusterSize}                         \
+              --iterations ${app.kmeans.bisecting.iterations}                           \
+              --bisect                                                                  \
+              --iterationsamples ${app.kmeans.bisecting.iterationSamples}               \
+              --output ${system.hadoop-2.path.output}${app.kmeans.output}
+            ]]></value>
+        </constructor-arg>
+        <constructor-arg name="outputs">
+            <set value-type="org.peelframework.core.beans.data.ExperimentOutput">
+                <ref bean="kmeans-10k.output"/>
+            </set>
+        </constructor-arg>
+    </bean>
+
+    <bean id="experiment.flink.kmeans.variance.plusplus-minibatch" parent="experiment.flink-1.0.3" abstract="true">
+        <constructor-arg name="command">
+            <value><![CDATA[
+              -v -c de.tu_berlin.dima.bdapro.benchmarks.kmeans.flink.KMeans             \
+              ${app.path.apps}/peel-flink-kmeans-flink-jobs-1.0-SNAPSHOT.jar            \
+              --points ${system.hadoop-2.path.input}/${app.kmeans.dataset.points}       \
+              --clustersize ${app.kmeans.plusplus-minibatch.clusterSize}                \
+              --iterations ${app.kmeans.plusplus-minibatch.iterations}                   \
+              --minibatch                                                               \
+              --samplesize ${app.kmeans.plusplus-minibatch.sampleSize}                  \
+              --plusplus                                                                \
+              --output ${system.hadoop-2.path.output}${app.kmeans.output}
+            ]]></value>
+        </constructor-arg>
+        <constructor-arg name="outputs">
+            <set value-type="org.peelframework.core.beans.data.ExperimentOutput">
+                <ref bean="kmeans-10k.output"/>
+            </set>
+        </constructor-arg>
+    </bean>
+
+    <bean id="experiment.flink.kmeans.variance.plusplus-bisecting" parent="experiment.flink-1.0.3" abstract="true">
+        <constructor-arg name="command">
+            <value><![CDATA[
+              -v -c de.tu_berlin.dima.bdapro.benchmarks.kmeans.flink.KMeans             \
+              ${app.path.apps}/peel-flink-kmeans-flink-jobs-1.0-SNAPSHOT.jar            \
+              --points ${system.hadoop-2.path.input}/${app.kmeans.dataset.points}       \
+              --clustersize ${app.kmeans.plusplus-bisecting.clusterSize}                \
+              --iterations ${app.kmeans.plusplus-bisecting.iterations}                   \
+              --bisecting                                                               \
+              --iterationsamples ${app.kmeans.plusplus-bisecting.iterationSamples}      \
+              --plusplus                                                                \
+              --output ${system.hadoop-2.path.output}${app.kmeans.output}
+            ]]></value>
+        </constructor-arg>
+        <constructor-arg name="outputs">
+            <set value-type="org.peelframework.core.beans.data.ExperimentOutput">
+                <ref bean="kmeans-10k.output"/>
+            </set>
+        </constructor-arg>
+    </bean>
+
+    <bean id="experiment.flink.kmeans.variance.plusplus-minibatch-bisecting" parent="experiment.flink-1.0.3" abstract="true">
+        <constructor-arg name="command">
+            <value><![CDATA[
+              -v -c de.tu_berlin.dima.bdapro.benchmarks.kmeans.flink.KMeans             \
+              ${app.path.apps}/peel-flink-kmeans-flink-jobs-1.0-SNAPSHOT.jar            \
+              --points ${system.hadoop-2.path.input}/${app.kmeans.dataset.points}       \
+              --clustersize ${app.kmeans.plusplus-minibatch-bisecting.clusterSize}      \
+              --iterations ${app.kmeans.plusplus-minibatch-bisecting.iterations}         \
+              --bisecting                                                               \
+              --iterationsamples ${app.kmeans.plusplus-minibatch-bisecting.iterationSamples}                \
+              --plusplus                                                                \
+              --minibatch                                                               \
+              --samplesize ${app.kmeans.plusplus-minibatch-bisecting.sampleSize}        \
+              --output ${system.hadoop-2.path.output}${app.kmeans.output}
+            ]]></value>
+        </constructor-arg>
+        <constructor-arg name="outputs">
+            <set value-type="org.peelframework.core.beans.data.ExperimentOutput">
+                <ref bean="kmeans-10k.output"/>
+            </set>
+        </constructor-arg>
+    </bean>
+
+    <!--************************************************************************
+    * Suites
+    *************************************************************************-->
+
+    <bean id="kmeans.variance.suite.plain" class="org.peelframework.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <bean class="org.peelframework.core.beans.experiment.ExperimentSequence">
+                <constructor-arg name="paramName" value="variance"/>
+                <constructor-arg name="paramVals">
+                    <list>
+                        <value>1</value>
+                        <value>2</value>
+                        <value>3</value>
+                        <value>4</value>
+                        <value>5</value>
+                    </list>
+                </constructor-arg>
+                <constructor-arg name="prototypes">
+                    <list value-type="org.peelframework.core.beans.experiment.Experiment">
+                        <bean parent="experiment.flink.kmeans.variance.plain">
+                            <constructor-arg name="name" value="kmeans.flink.plain.variance-__variance__"/>
+                            <constructor-arg name="inputs">
+                                <set>
+                                    <ref bean="dataset.kmeans-variance1"/>
+                                    <ref bean="dataset.kmeans-variance2"/>
+                                    <ref bean="dataset.kmeans-variance3"/>
+                                    <ref bean="dataset.kmeans-variance4"/>
+                                    <ref bean="dataset.kmeans-variance5"/>
+                                </set>
+                            </constructor-arg>
+                            <constructor-arg name="config">
+                                <value><![CDATA[
+                                  app.kmeans.plain.iterations = 10
+                                  app.kmeans.plain.clusterSize = 5
+                                  app.kmeans.dataset.points = "variance-__variance__-points.csv"
+                                  app.kmeans.output = "/output-__variance__"
+                                ]]></value>
+                            </constructor-arg>
+                        </bean>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="kmeans.variance.suite.plusplus" class="org.peelframework.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <bean class="org.peelframework.core.beans.experiment.ExperimentSequence">
+                <constructor-arg name="paramName" value="variance"/>
+                <constructor-arg name="paramVals">
+                    <list>
+                        <value>1</value>
+                        <value>2</value>
+                        <value>3</value>
+                        <value>4</value>
+                        <value>5</value>
+                    </list>
+                </constructor-arg>
+                <constructor-arg name="prototypes">
+                    <list value-type="org.peelframework.core.beans.experiment.Experiment">
+                        <bean parent="experiment.flink.kmeans.variance.plusplus">
+                            <constructor-arg name="name" value="kmeans.flink.plusplus.variance-__variance__"/>
+                            <constructor-arg name="inputs">
+                                <set>
+                                    <ref bean="dataset.kmeans-variance1"/>
+                                    <ref bean="dataset.kmeans-variance2"/>
+                                    <ref bean="dataset.kmeans-variance3"/>
+                                    <ref bean="dataset.kmeans-variance4"/>
+                                    <ref bean="dataset.kmeans-variance5"/>
+                                </set>
+                            </constructor-arg>
+                            <constructor-arg name="config">
+                                <value><![CDATA[
+                                  app.kmeans.plain.iterations = 10
+                                  app.kmeans.plain.clusterSize = 5
+                                  app.kmeans.dataset.points = "variance-__variance__-points.csv"
+                                  app.kmeans.output = "/output-__variance__"
+                                ]]></value>
+                            </constructor-arg>
+                        </bean>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="kmeans.variance.suite.minibatch" class="org.peelframework.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <bean class="org.peelframework.core.beans.experiment.ExperimentSequence">
+                <constructor-arg name="paramName" value="variance"/>
+                <constructor-arg name="paramVals">
+                    <list>
+                        <value>1</value>
+                        <value>2</value>
+                        <value>3</value>
+                        <value>4</value>
+                        <value>5</value>
+                    </list>
+                </constructor-arg>
+                <constructor-arg name="prototypes">
+                    <list value-type="org.peelframework.core.beans.experiment.Experiment">
+                        <bean parent="experiment.flink.kmeans.variance.minibatch">
+                            <constructor-arg name="name" value="kmeans.flink.minibatch.variance-__variance__"/>
+                            <constructor-arg name="inputs">
+                                <set>
+                                    <ref bean="dataset.kmeans-variance1"/>
+                                    <ref bean="dataset.kmeans-variance2"/>
+                                    <ref bean="dataset.kmeans-variance3"/>
+                                    <ref bean="dataset.kmeans-variance4"/>
+                                    <ref bean="dataset.kmeans-variance5"/>
+                                </set>
+                            </constructor-arg>
+                            <constructor-arg name="config">
+                                <value><![CDATA[
+                                  app.kmeans.plain.iterations = 10
+                                  app.kmeans.plain.clusterSize = 5
+                                  app.kmeans.dataset.points = "variance-__variance__-points.csv"
+                                  app.kmeans.output = "/output-__variance__"
+                                ]]></value>
+                            </constructor-arg>
+                        </bean>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+    </bean>
+</beans>

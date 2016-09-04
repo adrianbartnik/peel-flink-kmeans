@@ -10,7 +10,7 @@
     <bean id="dataset.kmeans-test.static.points" class="org.peelframework.core.beans.data.CopiedDataSet">
         <constructor-arg name="src" value="${app.path.datasets}/data_test.csv"/>
         <constructor-arg name="dst" value="${system.hadoop-2.path.input}/data_test.csv"/>
-        <constructor-arg name="fs" ref="hdfs-2.7.1"/>
+        <constructor-arg name="fs" ref="provided-hdfs"/>
     </bean>
 
     <!--************************************************************************
