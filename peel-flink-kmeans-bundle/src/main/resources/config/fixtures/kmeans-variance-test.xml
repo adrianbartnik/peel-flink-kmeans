@@ -261,8 +261,8 @@
                             </constructor-arg>
                             <constructor-arg name="config">
                                 <value><![CDATA[
-                                  app.kmeans.plain.iterations = 10
-                                  app.kmeans.plain.clusterSize = 5
+                                  app.kmeans.plusplus.iterations = 10
+                                  app.kmeans.plusplus.clusterSize = 5
                                   app.kmeans.dataset.points = "variance-__variance__-points.csv"
                                   app.kmeans.output = "/output-__variance__"
                                 ]]></value>
@@ -302,10 +302,53 @@
                             </constructor-arg>
                             <constructor-arg name="config">
                                 <value><![CDATA[
-                                  app.kmeans.plain.iterations = 10
-                                  app.kmeans.plain.clusterSize = 5
+                                  app.kmeans.minibatch.iterations = 10
+                                  app.kmeans.minibatch.clusterSize = 5
+                                  app.kmeans.minibatch.sampleSize = 1000
                                   app.kmeans.dataset.points = "variance-__variance__-points.csv"
                                   app.kmeans.output = "/output-__variance__"
+                                ]]></value>
+                            </constructor-arg>
+                        </bean>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="kmeans.variance.suite.plusplus-minibatch" class="org.peelframework.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <bean class="org.peelframework.core.beans.experiment.ExperimentSequence">
+                <constructor-arg name="paramName" value="variance"/>
+                <constructor-arg name="paramVals">
+                    <list>
+                        <value>1</value>
+                        <value>2</value>
+                        <value>3</value>
+                        <value>4</value>
+                        <value>5</value>
+                    </list>
+                </constructor-arg>
+                <constructor-arg name="prototypes">
+                    <list value-type="org.peelframework.core.beans.experiment.Experiment">
+                        <bean parent="experiment.flink.kmeans.variance.plusplus-minibatch">
+                            <constructor-arg name="name" value="kmeans.flink.plusplus-minibatch.variance-__variance__"/>
+                            <constructor-arg name="inputs">
+                                <set>
+                                    <ref bean="dataset.kmeans-variance1"/>
+                                    <ref bean="dataset.kmeans-variance2"/>
+                                    <ref bean="dataset.kmeans-variance3"/>
+                                    <ref bean="dataset.kmeans-variance4"/>
+                                    <ref bean="dataset.kmeans-variance5"/>
+                                </set>
+                            </constructor-arg>
+                            <constructor-arg name="config">
+                                <value><![CDATA[
+                                 app.kmeans.plusplus-minibatch.iterations = 10
+                                 app.kmeans.plusplus-minibatch.clusterSize = 5
+                                 app.kmeans.plusplus-minibatch.sampleSize = 1000
+                                 app.kmeans.dataset.points = "variance-__variance__-points.csv"
+                                 app.kmeans.output = "/output-__variance__"
                                 ]]></value>
                             </constructor-arg>
                         </bean>
